@@ -71,6 +71,13 @@ namespace ENetworking
         }
 
         public void StopResponseListener() => ServerListenerThread.Abort();
+
+        public void Send(object data){
+            byte[] tempBuffer = Serializer.Serialize(data);
+            ServerListenerSocket.Send(tempBuffer);
+        }
+
+
         
     }
 }

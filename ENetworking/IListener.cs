@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 
 namespace ENetworking {
-    interface IListener {
+    public interface IListener {
         Socket GetSocket();
         void DataIncoming(byte[] vs);
+        void StartResponseListener();
+        void StopResponseListener();
+
     }
 }
