@@ -3,18 +3,19 @@ using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
 using System.Threading;
+using ENetworking.Serialization;
 
 namespace ENetworking {
     /// <summary>
     /// Uses ServerClient Object
     /// </summary>
-    public class Server<C,T> where C : IServerClient<T> {
+    public class Server<T> {
 
 
         public int port;
         private Socket ListenerSocket;
         public ISerializer _Serializer;
-        private List<ClientConnectionArgs<T>> ClientConnections = new List<ENetworking.ClientConnectionArgs<T>>();
+        private List<ClientConnectionArgs<T>> ClientConnections = new List<ClientConnectionArgs<T>>();
         public event RecieveHandler DataSerialized;
 
 
@@ -23,15 +24,17 @@ namespace ENetworking {
 
         public Server(int port) {
             this.port = port;
-            _Serializer = new ENetworking.Serializer();
+            _Serializer = new Serializer();
+            InitializeConnection();
         }
 
         public Server(int port, ISerializer serializer) {
             this.port = port;
             _Serializer = serializer;
+            InitializeConnection();
         }
 
-        public void InitializeConnection() {
+        void InitializeConnection() {
 
 
             IPHostEntry iPHostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -39,6 +42,7 @@ namespace ENetworking {
             IPEndPoint endPoint = new IPEndPoint(iP, port);
             ListenerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             ListenerSocket.Bind(endPoint);
+            ListenerSocket.Listen(10);
 
 
         }
@@ -47,13 +51,15 @@ namespace ENetworking {
         public void Run(bool run) {
             try {
                 while (run) {
-
+                    Console.WriteLine("Listening");
                     Socket tempSocket = ListenerSocket.Accept();
+                    Console.WriteLine("accepted");
                     int tempID = IDGenerator.GenerateID();
                     KeyValuePair<Socket, int> tempClientConnection = new KeyValuePair<Socket, int>(tempSocket, tempID);
                     ServerClient<T> serverClient = new ServerClient<T>(tempClientConnection, _Serializer, this);
                     Thread clientThread = new Thread(new ThreadStart(serverClient.Run));
 
+                    serverClient.StartResponseListener();
 
                     ClientConnectionArgs<T> tempClientConnectionArgs = new ClientConnectionArgs<T>();
                     tempClientConnectionArgs.ID = tempID;
@@ -69,6 +75,7 @@ namespace ENetworking {
 
                     serverClient.HostTransfer += DataSerialized;
                 }
+                ShutDown();
             }catch{}
         }
 

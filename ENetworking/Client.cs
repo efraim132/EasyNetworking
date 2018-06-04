@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using ENetworking.Serialization;
 
 namespace ENetworking
 {
@@ -72,10 +73,8 @@ namespace ENetworking
 
         public void StopResponseListener() => ServerListenerThread.Abort();
 
-        public void Send(object data){
-            byte[] tempBuffer = Serializer.Serialize(data);
-            ServerListenerSocket.Send(tempBuffer);
-        }
+        public void Send(object data) => ServerListenerSocket.Send(
+                                         Serializer.Serialize(data));
 
 
         

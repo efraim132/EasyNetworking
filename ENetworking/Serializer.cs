@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace ENetworking {
+namespace ENetworking.Serialization {
     class Serializer : ISerializer {
         public T DeSerialize<T>(byte[] vs) {
             MemoryStream ms = new MemoryStream(vs);

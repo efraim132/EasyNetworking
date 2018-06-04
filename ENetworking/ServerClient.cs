@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using ENetworking.Serialization;
 namespace ENetworking {
     public class ServerClient<T> : IServerClient<T>{
         private KeyValuePair<Socket, int> ClientData;
@@ -15,6 +16,7 @@ namespace ENetworking {
 
 
         public ServerClient(KeyValuePair<Socket, int> keyValuePair, ISerializer serializer, Server<T> host) {
+            Console.WriteLine("CLientCreated!");
             ClientData = keyValuePair;
             this.seriealizer = serializer;
             this.host = host;
@@ -24,6 +26,7 @@ namespace ENetworking {
             ClientData = keyValuePair;
             this.seriealizer = new Serializer();
             this.host = host;
+            Console.WriteLine("CLientCreated!");
         }
 
 
