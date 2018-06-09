@@ -34,7 +34,7 @@ namespace ENetworking {
 
 
         public void Run() {
-            throw new NotImplementedException();
+            Console.WriteLine($"I, child:{ClientData.Value} have been born!");
         }
 
         public Socket GetSocket() { return ClientData.Key; }

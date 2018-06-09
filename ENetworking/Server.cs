@@ -53,11 +53,17 @@ namespace ENetworking {
                 while (run) {
                     Console.WriteLine("Listening");
                     Socket tempSocket = ListenerSocket.Accept();
-                    Console.WriteLine("accepted");
+                    Console.WriteLine("accepted, creating child!");
                     int tempID = IDGenerator.GenerateID();
+                    Console.WriteLine($"Id gen {tempID}");
                     KeyValuePair<Socket, int> tempClientConnection = new KeyValuePair<Socket, int>(tempSocket, tempID);
                     ServerClient<T> serverClient = new ServerClient<T>(tempClientConnection, _Serializer, this);
                     Thread clientThread = new Thread(new ThreadStart(serverClient.Run));
+
+                    clientThread.Start();
+
+                    while (!clientThread.IsAlive) ;
+
 
                     serverClient.StartResponseListener();
 
@@ -69,10 +75,8 @@ namespace ENetworking {
 
                     ClientConnections.Add(tempClientConnectionArgs);
 
-                    clientThread.Start();
 
-                    while (!clientThread.IsAlive) ;
-
+                    
                     serverClient.HostTransfer += DataSerialized;
                 }
                 ShutDown();
