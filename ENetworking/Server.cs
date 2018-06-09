@@ -76,7 +76,10 @@ namespace ENetworking {
                     serverClient.HostTransfer += DataSerialized;
                 }
                 ShutDown();
-            }catch{}
+            }catch(Exception e){
+                Console.WriteLine(e);
+                run = false;
+            }
         }
 
         public void ShutDown(){
