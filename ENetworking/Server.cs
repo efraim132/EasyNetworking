@@ -17,6 +17,7 @@ namespace ENetworking {
         public ISerializer _Serializer;
         private List<ClientConnectionArgs<T>> ClientConnections = new List<ClientConnectionArgs<T>>();
         public event RecieveHandler DataSerialized;
+        
 
 
 
@@ -54,7 +55,7 @@ namespace ENetworking {
                     Console.WriteLine("Listening");
                     Socket tempSocket = ListenerSocket.Accept();
                     Console.WriteLine("accepted, creating child!");
-                    int tempID = IDGenerator.GenerateID();
+                    int tempID = IDGenerator.GenerateID;
                     Console.WriteLine($"Id gen {tempID}");
                     KeyValuePair<Socket, int> tempClientConnection = new KeyValuePair<Socket, int>(tempSocket, tempID);
                     ServerClient<T> serverClient = new ServerClient<T>(tempClientConnection, _Serializer, this);

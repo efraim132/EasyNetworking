@@ -9,7 +9,7 @@ namespace ENetworking {
         private KeyValuePair<Socket, int> ClientData;
         Thread ListenerThread;
         Listener _Listener;
-        ISerializer seriealizer;
+        ISerializer serializer;
         Server<T> host;
         public event RecieveHandler HostTransfer;
 
@@ -18,13 +18,13 @@ namespace ENetworking {
         public ServerClient(KeyValuePair<Socket, int> keyValuePair, ISerializer serializer, Server<T> host) {
             Console.WriteLine("CLientCreated!");
             ClientData = keyValuePair;
-            this.seriealizer = serializer;
+            this.serializer = serializer;
             this.host = host;
         }
 
         public ServerClient(KeyValuePair<Socket, int> keyValuePair, Server<T> host) {
             ClientData = keyValuePair;
-            this.seriealizer = new Serializer();
+            serializer = new Serializer();
             this.host = host;
             Console.WriteLine("CLientCreated!");
         }
