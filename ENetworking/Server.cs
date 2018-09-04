@@ -4,12 +4,14 @@ using System.Net.Sockets;
 using System.Collections.Generic;
 using System.Threading;
 using ENetworking.Serialization;
+using ENetworking;
+using ENetworking.Client;
 
-namespace ENetworking {
+namespace ENetworking.Server {
     /// <summary>
     /// Uses ServerClient Object
     /// </summary>
-    public class Server<T> {
+    public class Server<C, T> where C : IServerClient<T>{
 
 
         public int port;
@@ -17,7 +19,8 @@ namespace ENetworking {
         public ISerializer _Serializer;
         private List<ClientConnectionArgs<T>> ClientConnections = new List<ClientConnectionArgs<T>>();
         public event RecieveHandler DataSerialized;
-        
+
+
 
 
 
@@ -27,6 +30,9 @@ namespace ENetworking {
             this.port = port;
             _Serializer = new Serializer();
             InitializeConnection();
+
+
+
         }
 
         public Server(int port, ISerializer serializer) {
@@ -58,7 +64,7 @@ namespace ENetworking {
                     int tempID = IDGenerator.GenerateID;
                     Console.WriteLine($"Id gen {tempID}");
                     KeyValuePair<Socket, int> tempClientConnection = new KeyValuePair<Socket, int>(tempSocket, tempID);
-                    ServerClient<T> serverClient = new ServerClient<T>(tempClientConnection, _Serializer, this);
+                    var serverClient = C;
                     Thread clientThread = new Thread(new ThreadStart(serverClient.Run));
 
                     clientThread.Start();

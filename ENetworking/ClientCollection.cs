@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace ENetworking.Server {
+    public class ClientCollection<C, T> : IClientCollection<C, T> where C : IServerClient<T> {
+        private List<C>  
 
-namespace ENetworking {
-    interface ClientCollection<T> {
-        void Add(IServerClient<T> Client);
-        IServerClient<T> Get();
-        
+
+
+
+        public void Add(IServerClient<T> Client) {
+            throw new NotImplementedException();
+        }
+
+        public IServerClient<T> Get() {
+            throw new NotImplementedException();
+        }
     }
 }

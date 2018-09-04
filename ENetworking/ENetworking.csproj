@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="ClientCollection.cs" />
+    <Compile Include="IClientCollection.cs" />
     <Compile Include="IListener.cs" />
     <Compile Include="ISerializer.cs" />
     <Compile Include="IRecieverObjectClient.cs" />
@@ -54,6 +54,7 @@
     <Compile Include="IServerClient.cs" />
     <Compile Include="ServerClient.cs" />
     <Compile Include="ClientConnectionArgs.cs" />
+    <Compile Include="ClientCollection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

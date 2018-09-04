@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading;
 using ENetworking.Serialization;
 
-namespace ENetworking
+namespace ENetworking.Client
 {
     /// <summary>
     /// Recieving Handler
@@ -73,7 +73,7 @@ namespace ENetworking
 
         public void StopResponseListener() => ServerListenerThread.Abort();
 
-        public void Send(object data) => ServerListenerSocket.Send(
+        public void Send(T data) => ServerListenerSocket.Send(
                                          Serializer.Serialize(data));
 
 
