@@ -7,6 +7,13 @@ using ENetworking.Serialization;
 using ENetworking;
 using ENetworking.Client;
 
+/// <summary>
+/// Recieving handler.
+/// <param name="obj">object data</param>
+/// <param name="id">client associated with object</param>
+/// </summary>
+public delegate void RecieveHandler(object obj, int id);
+
 namespace ENetworking.Server {
     /// <summary>
     /// Uses ServerClient Object
@@ -18,7 +25,7 @@ namespace ENetworking.Server {
         private Socket ListenerSocket;
         public ISerializer _Serializer;
         private List<ClientConnectionArgs<T>> ClientConnections = new List<ClientConnectionArgs<T>>();
-        public event RecieveHandler DataSerialized;
+        public event RecieveHandler HostTransfer;
 
 
 
