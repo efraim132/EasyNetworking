@@ -6,6 +6,15 @@ using System.Threading;
 using ENetworking.Serialization;
 
 namespace ENetworking {
+
+    /// <summary>
+    /// Recieving Handler
+    /// </summary>
+    /// <param name="obj">object data</param>
+    /// <param name="id">client associated with object</param>
+    public delegate void RecieveHandler(object obj , int id);
+
+
     /// <summary>
     /// Uses ServerClient Object
     /// </summary>

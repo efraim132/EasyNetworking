@@ -16,7 +16,7 @@ namespace ENetworking {
 
 
         public ServerClient(KeyValuePair<Socket, int> keyValuePair, ISerializer serializer, Server<T> host) {
-            Console.WriteLine("CLientCreated!");
+            Console.WriteLine("ClientCreated!");
             ClientData = keyValuePair;
             this.serializer = serializer;
             this.host = host;
@@ -26,7 +26,7 @@ namespace ENetworking {
             ClientData = keyValuePair;
             serializer = new Serializer();
             this.host = host;
-            Console.WriteLine("CLientCreated!");
+            Console.WriteLine("ClientCreated!");
         }
 
 
@@ -39,7 +39,7 @@ namespace ENetworking {
 
         public Socket GetSocket() { return ClientData.Key; }
 
-        public void DataIncoming(byte[] vs) => HostTransfer.Invoke(seriealizer.DeSerialize<T>(vs), ClientData.Value);
+        public void DataIncoming(byte[] vs) => HostTransfer.Invoke(serializer.DeSerialize<T>(vs), ClientData.Value);
 
         public void StartResponseListener() {
             _Listener = new Listener(this);

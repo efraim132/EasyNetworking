@@ -8,14 +8,8 @@ using System.Net;
 using System.Threading;
 using ENetworking.Serialization;
 
-namespace ENetworking
+namespace ENetworking.Client
 {
-    /// <summary>
-    /// Recieving Handler
-    /// </summary>
-    /// <param name="obj">object data</param>
-    /// <param name="id">client associated with object</param>
-    public delegate void RecieveHandler(object obj, int id);
 
     public class Client<T> : IListener {
         
